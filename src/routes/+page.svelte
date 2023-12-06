@@ -17,10 +17,11 @@
 			alt="Background"
 		/>
 		<h1 class="text-center text-5xl font-bold drop-shadow-md">Rate My Rentals</h1>
-		<h3 class="drop-shadow-md">Enter an address to get started!</h3>
+		<h3 class="text-center drop-shadow-md">Enter an address to get started!</h3>
 		<Search
-			selectClass="h-14 w-44 rounded shadow-md px-5 bg-white text-black"
-			inputClass="h-14 w-96 rounded shadow-md px-5 bg-white text-black"
+			formClass="max-w-sm sm:max-w-max flex-wrap"
+			selectClass="h-14 w-full sm:w-44 rounded shadow-md px-5 bg-white text-black"
+			inputClass="h-14 w-full sm:w-96 rounded shadow-md px-5 bg-white text-black"
 			accessToken={data.accessToken}
 			autofocus
 		/>

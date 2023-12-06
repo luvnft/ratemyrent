@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>{data.data.features[0].properties.name || 'Rate My Rentals'}</title>
+	<title>{data.data.features[0]?.properties.name || 'Rate My Rentals'}</title>
 </svelte:head>
 
 <Header accessToken={data.accessToken} />

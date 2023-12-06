@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import Page from '../../routes/+page.svelte';
+	import { region } from '$lib/store';
 
 	export let accessToken: string;
 
@@ -22,8 +22,6 @@
 			});
 	});
 
-	let selected: string;
-
 	const handleInput = async () => {
 		if (!address) {
 			suggestions = [];
@@ -31,7 +29,7 @@
 		}
 		const res = await fetch(
 			`https://api.mapbox.com/search/searchbox/v1/suggest?q=${address}&language=en${
-				selected ? `&country=${selected}` : ''
+				$region ? `&country=${$region}` : ''
 			}&session_token=default_session&access_token=${accessToken}`
 		);
 		suggestions = (await res.json()).suggestions || [];
@@ -46,15 +44,17 @@
 		);
 	};
 
-	export let selectClass = 'h-10 w-40 rounded border border-white bg-transparent px-2 text-white';
-	export let inputClass = 'h-10 w-60 rounded border border-white bg-transparent p-3';
+	export let formClass = '';
+	export let selectClass =
+		'h-10 w-40 hidden sm:block rounded border border-white bg-transparent px-2 text-white';
+	export let inputClass = 'h-10 w-60 rounded border border-white bg-transparent px-3';
 	export let autofocus = false;
 </script>
 
-<form class="group flex w-96 flex-wrap justify-center gap-1 sm:w-max" on:submit|preventDefault>
+<form class={`${formClass} group flex justify-center gap-1`} on:submit|preventDefault>
 	<select
 		class={`${selectClass} flex-auto transition-colors focus:outline-none group-hover:bg-white group-hover:text-black [&:has(+_div_>_input:focus)]:bg-white [&:has(+_div_>_input:focus)]:text-black`}
-		bind:value={selected}
+		bind:value={$region}
 	>
 		<option value="">Worldwide</option>
 		<option value="US">United States</option>
@@ -64,15 +64,15 @@
 		<option value="SG">Singapore</option>
 		<option value="NZ">New Zealand</option>
 		<option value="IE">Ireland</option>
-		<option disabled>-----------</option>
+		<option value="divider" disabled>-----------</option>
 		{#each countries as country}
 			<option value={country.code}>{country.name}</option>
 		{/each}
 	</select>
-	<div class="group-hover:[&>input]:bg-white">
+	<div class="flex-auto group-hover:[&>input]:bg-white">
 		<!-- svelte-ignore a11y-autofocus -->
 		<input
-			class={`${inputClass} flex-auto transition-colors focus:bg-white focus:outline-none`}
+			class={`${inputClass} transition-colors focus:bg-white focus:outline-none`}
 			type="search"
 			autocomplete="street-address"
 			placeholder="Enter an address"
