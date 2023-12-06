@@ -1,29 +1,27 @@
 <script lang="ts">
-	let name = '';
+	import Search from '$lib/components/Search.svelte';
+	import backgroundImage from '$lib/assets/background-image.jpg';
+
+	export let data;
 </script>
 
-<main class="flex flex-col min-h-screen items-center justify-center space-y-3">
-	<div class="text-center">
-		<h1>Welcome to SvelteKit</h1>
-		<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-	</div>
-	<div class="text-center">
-		<input
-			class="border-2 border-blue-500 rounded p-3"
-			type="text"
-			name="name"
-			bind:value={name}
-			placeholder="Put your name here!"
+<svelte:head>
+	<title>Rate My Rentals</title>
+</svelte:head>
+
+<main>
+	<div class="flex h-screen flex-col items-center justify-center space-y-5 text-white">
+		<img
+			class="absolute -z-50 h-full w-full object-cover brightness-50"
+			src={backgroundImage}
+			alt="Background"
 		/>
-		<p>Hello, {name || 'stranger'}!</p>
+		<h1 class="text-5xl font-bold">Rate My Rentals</h1>
+		<h3>Enter an address to get started!</h3>
+		<Search
+			className="h-14 w-96 rounded shadow-md p-5 transition-colors bg-white text-black"
+			accessToken={data.accessToken}
+			autofocus
+		/>
 	</div>
 </main>
-
-<style lang="postcss">
-	h1 {
-		@apply text-3xl;
-	}
-	a {
-		@apply text-blue-700;
-	}
-</style>
