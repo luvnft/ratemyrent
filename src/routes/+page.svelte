@@ -16,10 +16,11 @@
 			src={backgroundImage}
 			alt="Background"
 		/>
-		<h1 class="text-5xl font-bold">Rate My Rentals</h1>
-		<h3>Enter an address to get started!</h3>
+		<h1 class="text-center text-5xl font-bold drop-shadow-md">Rate My Rentals</h1>
+		<h3 class="drop-shadow-md">Enter an address to get started!</h3>
 		<Search
-			className="h-14 w-96 rounded shadow-md p-5 transition-colors bg-white text-black"
+			selectClass="h-14 w-44 rounded shadow-md px-5 bg-white text-black"
+			inputClass="h-14 w-96 rounded shadow-md px-5 bg-white text-black"
 			accessToken={data.accessToken}
 			autofocus
 		/>
