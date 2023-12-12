@@ -1,5 +1,5 @@
-import { MAPBOX_API_KEY } from '$env/static/private';
+import { API_KEY } from '$env/static/private';
 
 export function load() {
-	return { accessToken: MAPBOX_API_KEY };
+	return { apiKey: API_KEY };
 }

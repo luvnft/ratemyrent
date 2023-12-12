@@ -1,8 +1,10 @@
-import { MAPBOX_API_KEY } from '$env/static/private';
+import { API_KEY } from '$env/static/private';
 
-export async function load({ params }) {
+export async function load({ params: { id } }) {
 	const res = await fetch(
-		`https://api.mapbox.com/search/searchbox/v1/retrieve/${params.id}?session_token=default_session&access_token=${MAPBOX_API_KEY}`
+		`https://maps.googleapis.com/maps/api/place/details/json?place_id=${id}&fields=formatted_address,name,type&key=${API_KEY}`
 	);
-	return { data: res.json(), accessToken: MAPBOX_API_KEY };
+	const place = await res.json();
+	console.log(place);
+	return { place: place, apiKey: API_KEY };
 }

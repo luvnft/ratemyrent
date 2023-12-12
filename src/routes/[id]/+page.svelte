@@ -5,11 +5,12 @@
 </script>
 
 <svelte:head>
-	<title>{data.data.features[0]?.properties.name || 'Rate My Rentals'}</title>
+	<title>{data.place.result.name || 'Rate My Rentals'}</title>
 </svelte:head>
 
-<Header accessToken={data.accessToken} />
+<Header apiKey={data.apiKey} />
 
-<main class="mt-16">
-	<pre>{JSON.stringify(data.data, null, 2) || 'Loading...'}</pre>
+<main class="mt-16 p-10">
+	<h1 class="text-4xl">{data.place.result.name || 'Address Not Found'}</h1>
+	<h2>{data.place.result.formatted_address || 'Address Not Found'}</h2>
 </main>
