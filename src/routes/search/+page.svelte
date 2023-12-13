@@ -40,7 +40,7 @@
 					{place.administrative_area},
 					{place.country_code}
 				</h3>
-				<pre>{JSON.stringify(place, null, 2)}</pre>
+				<pre class="whitespace-pre-wrap">{JSON.stringify(place, null, 2)}</pre>
 			</button>
 		{/each}
 	</div>

@@ -11,7 +11,7 @@
 </svelte:head>
 
 <main>
-	<div class="flex h-screen flex-col items-center justify-center space-y-5 text-white">
+	<div class="mx-8 flex h-screen flex-col items-center justify-center space-y-5 text-white">
 		<img
 			class="absolute -z-50 h-full w-full object-cover brightness-50"
 			src={backgroundImage}

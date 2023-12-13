@@ -27,5 +27,5 @@
 		{data.place.administrative_area},
 		{data.place.country_code}
 	</h2>
-	<pre>{JSON.stringify(data.place, null, 2)}</pre>
+	<pre class="whitespace-pre-wrap">{JSON.stringify(data.place, null, 2)}</pre>
 </main>

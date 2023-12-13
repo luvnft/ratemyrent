@@ -13,8 +13,9 @@
 
 	export let formClass = '';
 	export let selectClass =
-		'h-10 w-40 hidden sm:block rounded border border-white bg-transparent px-2 text-white';
-	export let inputClass = 'h-10 w-60 text-white rounded border border-white bg-transparent px-3';
+		'h-10 w-40 hidden sm:block rounded border border-white bg-transparent px-3 text-white';
+	export let inputClass =
+		'h-10 w-full min-w-[10rem] max-w-[15rem] text-white rounded border border-white bg-transparent px-3';
 	export let autofocus = false;
 
 	const handleSubmit = () => {
@@ -26,6 +27,7 @@
 		searchQuery.set(autocompleteQuery);
 		region.set(cc);
 		goto(`/search?q=${autocompleteQuery}&cc=${cc}`);
+		suggestions = [];
 	};
 
 	const supabase = createClient(apiUrl, apiKey);
@@ -49,11 +51,11 @@
 </script>
 
 <form
-	class={`${formClass} group flex justify-center gap-1`}
+	class={`${formClass} group flex flex-row items-center gap-1`}
 	on:submit|preventDefault={handleSubmit}
 >
 	<select
-		class={`${selectClass} flex-auto transition-colors focus:outline-none group-hover:bg-white group-hover:text-black [&:has(+_div_>_input:focus)]:bg-white [&:has(+_div_>_input:focus)]:text-black`}
+		class={`${selectClass} transition-colors focus:outline-none group-hover:bg-white group-hover:text-black [&:has(+_div_>_input:focus)]:bg-white [&:has(+_div_>_input:focus)]:text-black`}
 		bind:value={cc}
 		on:change={() => {
 			handleInput();
@@ -107,7 +109,7 @@
 		<option value="GB">United Kingdom</option>
 		<option value="US">United States</option>
 	</select>
-	<div class="flex-auto group-hover:[&>input]:bg-white group-hover:[&>input]:text-black">
+	<div class="flex-1 group-hover:[&>input]:bg-white group-hover:[&>input]:text-black">
 		<!-- svelte-ignore a11y-autofocus -->
 		<input
 			class={`${inputClass} peer transition-colors focus:bg-white focus:text-black focus:outline-none`}
