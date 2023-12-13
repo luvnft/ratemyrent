@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Search from '$lib/components/Search.svelte';
 	import backgroundImage from '$lib/assets/background-image.jpg';
+	import { region } from '$lib/store.js';
 
 	export let data;
 </script>
@@ -22,7 +23,9 @@
 			formClass="max-w-sm sm:max-w-max flex-wrap"
 			selectClass="h-14 w-full sm:w-44 rounded shadow-md px-5 bg-white text-black"
 			inputClass="h-14 w-full sm:w-96 rounded shadow-md px-5 bg-white text-black"
-			apiKey={data.apiKey}
+			apiUrl={data.SUPABASE_URL}
+			apiKey={data.SUPABASE_ANON_KEY}
+			cc={data.cc ?? $region ?? ''}
 			autofocus
 		/>
 	</div>

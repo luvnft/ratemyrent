@@ -33,8 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@googlemaps/js-api-loader": "^1.16.2",
-		"algoliasearch": "^4.21.1",
+		"@supabase/supabase-js": "^2.39.0",
 		"svelte-persisted-store": "^0.7.0"
 	}
 }

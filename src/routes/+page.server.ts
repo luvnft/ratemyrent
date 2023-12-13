@@ -1,5 +1,10 @@
-import { API_KEY } from '$env/static/private';
+import type { PageServerLoad } from './$types';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from '$env/static/private';
 
-export function load() {
-	return { apiKey: API_KEY };
-}
+export const load = (async ({ url }) => {
+	const searchParams = url.searchParams;
+
+	const cc = searchParams.get('cc');
+
+	return { cc, SUPABASE_URL, SUPABASE_ANON_KEY };
+}) satisfies PageServerLoad;
