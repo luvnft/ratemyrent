@@ -1,5 +1,5 @@
 import { persisted } from 'svelte-persisted-store';
 
-export const region = persisted('region', '');
+export const searchFilter = persisted('searchFilter', '%');
 
 export const searchQuery = persisted('searchQuery', '');

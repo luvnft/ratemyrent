@@ -1,13 +1,13 @@
 <script lang="ts">
 	import Search from '$lib/components/Search.svelte';
 	import backgroundImage from '$lib/assets/background-image.jpg';
-	import { region } from '$lib/store.js';
 
 	export let data;
 </script>
 
 <svelte:head>
 	<title>Rate My Rentals</title>
+	<meta name="theme-color" content="#000000" />
 </svelte:head>
 
 <main>
@@ -25,7 +25,7 @@
 			inputClass="h-14 w-full sm:w-96 rounded shadow-md px-5 bg-white text-black"
 			apiUrl={data.SUPABASE_URL}
 			apiKey={data.SUPABASE_ANON_KEY}
-			cc={data.cc ?? $region ?? ''}
+			filter={data.filter || undefined}
 			autofocus
 		/>
 	</div>
