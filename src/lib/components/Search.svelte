@@ -28,7 +28,9 @@
 	};
 
 	const handleInput = async () => {
-		const res = await fetch(encodeURI(`/api/search?q=${query}&filter=${filter}`));
+		const res = await fetch(
+			encodeURI(`${$page.url.origin}/api/search?q=${query}&filter=${filter}`)
+		);
 		const data: Place[] = (await res.json()) || [];
 		suggestions = data.slice(0, 5);
 	};

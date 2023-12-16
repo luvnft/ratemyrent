@@ -12,10 +12,12 @@
 	<title>{data.query} | Rate My Rentals</title>
 </svelte:head>
 
-<main class="mt-16 flex flex-row gap-10 p-10">
+<div class="flex flex-row gap-10">
 	<div class="flex-[2]">
-		<h1 class="hidden">Results for {data.query}</h1>
 		<div class="flex flex-col gap-5">
+			<h1 class="relative h-0 -translate-y-5 overflow-visible">
+				Results for "{data.query}"
+			</h1>
 			{#each data.places as place}
 				<button
 					type="button"
@@ -38,4 +40,4 @@
 		</div>
 	</div>
 	<div class="hidden flex-1 sm:block"></div>
-</main>
+</div>

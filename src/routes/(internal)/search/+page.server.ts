@@ -2,7 +2,7 @@ import type { Place } from '$lib/types';
 import { redirect } from '@sveltejs/kit';
 import { set_full_address } from '$lib/utils.js';
 
-export async function load({ url }) {
+export async function load({ url, fetch }) {
 	const searchParams = url.searchParams;
 
 	const query = searchParams.get('q')?.trim();

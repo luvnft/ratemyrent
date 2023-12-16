@@ -6,10 +6,8 @@
 	<title>{`${data.place.name} | Rate My Rentals` || 'Rate My Rentals'}</title>
 </svelte:head>
 
-<main class="mt-16 p-10">
-	<h1 class="text-4xl">{data.place.name}</h1>
-	<h2>{data.place.full_address}</h2>
-	<p>Alternative names: {data.place.alt_names.join(', ') || 'none'}</p>
-	<p>Owned and managed by: {data.place.landlords.join(', ') || 'unknown'}</p>
-	<p>Apartments, suites, or units: {data.place.units.join(', ') || 'none'}</p>
-</main>
+<h1 class="text-4xl">{data.place.name}</h1>
+<h2>{data.place.full_address}</h2>
+<p>Alternative names: {data.place.alt_names.join(', ') || 'none'}</p>
+<p>Owned and managed by: {data.place.landlords.join(', ') || 'unknown'}</p>
+<p>Apartments, suites, or units: {data.place.units.join(', ') || 'none'}</p>
