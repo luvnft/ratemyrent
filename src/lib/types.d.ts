@@ -8,4 +8,5 @@ export type Place = {
 	administrative_area: string;
 	locality: string;
 	landlords: string[];
+	full_address?: string;
 };

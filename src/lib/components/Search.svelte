@@ -3,19 +3,16 @@
 	import { page } from '$app/stores';
 	import { searchFilter, searchQuery } from '$lib/store';
 	import type { Place } from '$lib/types';
-	import { createClient } from '@supabase/supabase-js';
 
 	export let filter = $searchFilter;
 	export let query = $searchQuery;
-	export let apiUrl;
-	export let apiKey;
 	let suggestions: Place[] = [];
 
-	export let formClass = '';
-	export let selectClass =
-		'h-10 w-40 hidden sm:block rounded border border-white bg-transparent px-3 text-white';
-	export let inputClass =
-		'h-10 w-full min-w-[10rem] max-w-[15rem] text-white rounded border border-white bg-transparent px-3';
+	export let classes: {
+		form: string;
+		input: string;
+		select: string;
+	};
 	export let autofocus = false;
 
 	const handleSubmit = () => {
@@ -30,20 +27,14 @@
 		suggestions = [];
 	};
 
-	const supabase = createClient(apiUrl, apiKey);
-
 	const handleInput = async () => {
-		const { data } = await supabase
-			.from('places')
-			.select()
-			.ilike('country_code', filter)
-			.textSearch('searchable', query ? query.split(' ').join(':* & ') + ':*' : '')
-			.limit(5);
-		suggestions = data || [];
+		const res = await fetch(encodeURI(`/api/search?q=${query}&filter=${filter}`));
+		const data: Place[] = (await res.json()) || [];
+		suggestions = data.slice(0, 5);
 	};
 
 	const handleChange = () => {
-		if ($page.url.pathname == '/search') {
+		if ($page.url.pathname === '/search') {
 			searchFilter.set(filter);
 			goto(`/search?q=${query}&filter=${filter}`);
 		}
@@ -51,11 +42,11 @@
 </script>
 
 <form
-	class={`${formClass} group flex flex-row items-center gap-1`}
+	class={`${classes.form} group flex flex-row items-center gap-1`}
 	on:submit|preventDefault={handleSubmit}
 >
 	<select
-		class={`${selectClass} transition-colors focus:outline-none group-hover:bg-white group-hover:text-black [&:has(+_div_>_input:focus)]:bg-white [&:has(+_div_>_input:focus)]:text-black`}
+		class={`${classes.select} transition-colors focus:outline-none group-hover:bg-white group-hover:text-black [&:has(+_div_>_input:focus)]:bg-white [&:has(+_div_>_input:focus)]:text-black`}
 		bind:value={filter}
 		on:change={() => {
 			handleInput();
@@ -114,7 +105,7 @@
 	<div class="flex-1 group-hover:[&>input]:bg-white group-hover:[&>input]:text-black">
 		<!-- svelte-ignore a11y-autofocus -->
 		<input
-			class={`${inputClass} peer transition-colors focus:bg-white focus:text-black focus:outline-none`}
+			class={`${classes.input} peer transition-colors focus:bg-white focus:text-black focus:outline-none`}
 			type="search"
 			enterkeyhint="search"
 			placeholder="Enter an address"
