@@ -4,8 +4,6 @@
 	import { searchFilter, searchQuery } from '$lib/store';
 	import type { Place } from '$lib/types';
 
-	export let filter = $searchFilter;
-	export let query = $searchQuery;
 	let suggestions: Place[] = [];
 
 	export let classes: {
@@ -16,20 +14,17 @@
 	export let autofocus = false;
 
 	const handleSubmit = () => {
-		searchQuery.set(query);
-		searchFilter.set(filter);
-		goto(`/search?q=${query}&filter=${filter}`);
+		goto(`/search?q=${$searchQuery}&filter=${$searchFilter}`);
 	};
 	const handleClick = (autocompleteQuery: string) => {
 		searchQuery.set(autocompleteQuery);
-		searchFilter.set(filter);
-		goto(`/search?q=${autocompleteQuery}&filter=${filter}`);
+		goto(`/search?q=${autocompleteQuery}&filter=${$searchFilter}`);
 		suggestions = [];
 	};
 
 	const handleInput = async () => {
 		const res = await fetch(
-			encodeURI(`${$page.url.origin}/api/search?q=${query}&filter=${filter}`)
+			encodeURI(`${$page.url.origin}/api/search?q=${$searchQuery}&filter=${$searchFilter}`)
 		);
 		const data: Place[] = (await res.json()) || [];
 		suggestions = data.slice(0, 5);
@@ -37,8 +32,7 @@
 
 	const handleChange = () => {
 		if ($page.url.pathname === '/search') {
-			searchFilter.set(filter);
-			goto(`/search?q=${query}&filter=${filter}`);
+			goto(`/search?q=${$searchQuery}&filter=${$searchFilter}`);
 		}
 	};
 </script>
@@ -49,7 +43,7 @@
 >
 	<select
 		class={`${classes.select} transition-colors focus:outline-none group-hover:bg-white group-hover:text-black [&:has(+_div_>_input:focus)]:bg-white [&:has(+_div_>_input:focus)]:text-black`}
-		bind:value={filter}
+		bind:value={$searchFilter}
 		on:change={() => {
 			handleInput();
 			handleChange();
@@ -111,7 +105,7 @@
 			type="search"
 			enterkeyhint="search"
 			placeholder="Enter an address"
-			bind:value={query}
+			bind:value={$searchQuery}
 			on:input={handleInput}
 			{autofocus}
 		/>
