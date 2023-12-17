@@ -24,10 +24,10 @@
 
 	const handleInput = async () => {
 		const res = await fetch(
-			encodeURI(`${$page.url.origin}/api/search?q=${$searchQuery}&filter=${$searchFilter}`)
+			encodeURI(`${$page.url.origin}/api/search?q=${$searchQuery}&filter=${$searchFilter}&limit=5`)
 		);
 		const data: Place[] = (await res.json()) || [];
-		suggestions = data.slice(0, 5);
+		suggestions = data;
 	};
 
 	const handleChange = () => {
