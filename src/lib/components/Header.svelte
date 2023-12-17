@@ -3,7 +3,7 @@
 </script>
 
 <header class="fixed top-0 z-50 h-16 w-full bg-blue-700">
-	<nav class="mx-5 flex h-full flex-row items-center gap-5">
+	<nav class="mx-auto flex h-full max-w-6xl flex-row items-center gap-5 px-5">
 		<div><a class="text-white" href="/">Rate&nbsp;My Rentals</a></div>
 		<div>
 			<Search

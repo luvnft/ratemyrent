@@ -13,9 +13,7 @@ export async function load({ params }) {
 		.eq('id', params.id);
 
 	if (!data) {
-		throw error(404, {
-			message: 'Not found'
-		});
+		throw error(404);
 	}
 
 	data.forEach(set_full_address);

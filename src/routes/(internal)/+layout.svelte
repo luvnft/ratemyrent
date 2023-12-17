@@ -1,6 +1,5 @@
 <script>
 	import Header from '$lib/components/Header.svelte';
-	import Search from '$lib/components/Search.svelte';
 </script>
 
 <svelte:head>
@@ -9,6 +8,6 @@
 
 <Header />
 
-<main class="mt-16 p-10">
+<main class="mx-auto mt-16 max-w-6xl p-10">
 	<slot />
 </main>

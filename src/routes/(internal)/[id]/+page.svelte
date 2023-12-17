@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>{`${data.place.name} | Rate My Rentals` || 'Rate My Rentals'}</title>
+	<title>{data.place.name} | Rate My Rentals</title>
 </svelte:head>
 
 <h1 class="text-4xl">{data.place.name}</h1>
