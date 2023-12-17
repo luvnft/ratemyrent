@@ -7,7 +7,7 @@ export async function GET() {
 
 	const { data } = await supabase.from('places').select('id');
 
-	if (!data) throw error(500);
+	if (!data) throw error(502);
 
 	let urls = '';
 

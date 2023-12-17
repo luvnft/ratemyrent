@@ -1,12 +1,14 @@
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from '$env/static/private';
 import { createClient } from '@supabase/supabase-js';
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 
 export async function GET({ url }) {
 	const searchParams = url.searchParams;
 
-	const query = searchParams.get('q') || undefined;
-	const filter = searchParams.get('filter') || '%';
+	const query = searchParams.get('q');
+	const filter = searchParams.get('filter');
+
+	if (!query || !filter) throw error(400);
 
 	const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
