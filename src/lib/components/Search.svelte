@@ -48,6 +48,7 @@
 			handleInput();
 			handleChange();
 		}}
+		name="filter"
 	>
 		<optgroup label="Select a Region">
 			<option value="%">Worldwide</option>
@@ -98,11 +99,12 @@
 			<option value="US">United States</option>
 		</optgroup>
 	</select>
-	<div class="flex-1 group-hover:[&>input]:bg-white group-hover:[&>input]:text-black">
+	<div class="w-full sm:w-auto group-hover:[&>input]:bg-white group-hover:[&>input]:text-black">
 		<!-- svelte-ignore a11y-autofocus -->
 		<input
 			class={`${classes.input} peer transition-colors focus:bg-white focus:text-black focus:outline-none`}
 			type="search"
+			name="search"
 			enterkeyhint="search"
 			placeholder="Enter an address"
 			bind:value={$searchQuery}

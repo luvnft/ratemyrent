@@ -8,6 +8,6 @@
 
 <Header />
 
-<main class="mx-auto mt-16 max-w-6xl p-10">
+<main class="mx-auto mt-16 max-w-6xl p-16">
 	<slot />
 </main>

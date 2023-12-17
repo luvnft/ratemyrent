@@ -13,7 +13,7 @@
 </svelte:head>
 
 <div class="flex max-w-2xl flex-col gap-5">
-	<h1 class="relative h-0 -translate-y-5 overflow-visible">
+	<h1 class="relative h-0 -translate-y-8 overflow-visible">
 		Results for "{data.query}"
 	</h1>
 	{#each data.places as place}
