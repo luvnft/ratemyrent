@@ -25,8 +25,8 @@
 </button>
 <dialog class="w-full max-w-sm rounded-lg bg-white p-10" bind:this={dialog}>
 	<button
+	  type="button"
 		class="absolute right-5 top-5 leading-none"
-		type="button"
 		on:click={() => (state = State.Closed)}
 	>
 		&cross;
@@ -50,5 +50,10 @@
 			</FloatingLabelInput>
 		{/if}
 		<button class="rounded-lg bg-blue-600 py-3 text-white" type="submit">{state}</button>
+		{#if state == State.Signup}
+			<p>Already have an account? <button type="button" class="text-blue-600" on:click={() => state = State.Login}>{State.Login}</button></p>
+		{:else}
+			<p>Don't have an account? <button type="button" class="text-blue-600" on:click={() => state = State.Signup}>{State.Signup}</button></p>
+		{/if}
 	</form>
 </dialog>
