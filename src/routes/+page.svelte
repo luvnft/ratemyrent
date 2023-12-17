@@ -8,13 +8,10 @@
 	<meta name="theme-color" content="#000000" />
 </svelte:head>
 
-<main>
-	<div class="mx-8 flex h-screen flex-col items-center justify-center space-y-5 text-white">
-		<img
-			class="absolute -z-50 h-full w-full object-cover brightness-50"
-			src={backgroundImage}
-			alt="Background"
-		/>
+<main style={`background-image: url("${backgroundImage}"); background-size: cover;`}>
+	<div
+		class="flex h-screen flex-col items-center justify-center space-y-5 px-8 text-white backdrop-brightness-50"
+	>
 		<h1 class="text-center text-5xl font-bold drop-shadow-md">Rate My Rentals</h1>
 		<h2 class="text-center text-xl drop-shadow-md">Enter an address to get started!</h2>
 		<Search

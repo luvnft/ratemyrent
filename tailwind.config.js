@@ -4,10 +4,10 @@ export default {
 	theme: {
 		extend: {
 			height: {
-				screen: ['100vh', '100dvh']
+				screen: ['100vh', '100svh']
 			},
 			width: {
-				screen: ['100vw', '100dvw']
+				screen: ['100vw', '100svw']
 			}
 		}
 	},
