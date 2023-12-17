@@ -12,7 +12,7 @@
 
 <div class="fixed right-8 top-5 z-50 flex flex-row items-center gap-5 text-white"><SignLog /></div>
 
-<main style={`background-image: url("${backgroundImage}"); background-size: cover;`}>
+<main style={`background-image: url("${backgroundImage}"); background-size: cover; background-position: center;`}>
 	<div
 		class="flex h-screen flex-col items-center justify-center space-y-5 overflow-hidden px-8 text-white backdrop-brightness-50"
 	>
