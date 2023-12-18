@@ -1,10 +1,7 @@
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from '$env/static/private';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '$lib/supabase.js';
 import { error } from '@sveltejs/kit';
 
 export async function GET() {
-	const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
 	const { data } = await supabase.from('places').select('id');
 
 	if (!data) throw error(502);

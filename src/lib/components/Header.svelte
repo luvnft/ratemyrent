@@ -1,8 +1,8 @@
 <script lang="ts">
-	import SignLog from './SignLog.svelte';
-	import Search from '$lib/components/Search.svelte';
-	import { NavHamburger } from 'flowbite-svelte';
-	import { SearchOutline } from 'flowbite-svelte-icons';
+	import SignLog from '$lib/components/SignLog.svelte';
+	import Search from '$lib/components/SearchNav.svelte';
+	import Hamburger from '$lib/img/Hamburger.svelte';
+	import SearchIcon from '$lib/img/SearchIcon.svelte';
 	import { page } from '$app/stores';
 
 	let burgerClicked = false;
@@ -25,24 +25,26 @@
 			<Search
 				classes={{
 					form: 'hidden sm:flex',
-					input: 'h-10 w-52 rounded border border-white bg-transparent px-3 text-white',
-					select: 'h-10 w-40 rounded border border-white bg-transparent px-3 text-white'
+					input: 'h-10 w-52',
+					select: 'h-10 w-40'
 				}}
 			/>
 		</div>
 		<div class="flex flex-row">
 			<button
+				class="flex h-10 w-10 items-center justify-center sm:hidden"
 				type="button"
-				class="focus:outline-none sm:hidden"
 				on:click={() => (searchClicked = !searchClicked)}
 			>
-				<SearchOutline class="h-5 w-5 focus:outline-none" />
+				<SearchIcon className="h-5 w-5" />
 			</button>
-			<NavHamburger
-				class="hover:bg-transparent"
-				menuClass="focus:outline-none"
-				onClick={() => (burgerClicked = !burgerClicked)}
-			/>
+			<button
+				class="flex h-10 w-10 items-center justify-center md:hidden"
+				type="button"
+				on:click={() => (burgerClicked = !burgerClicked)}
+			>
+				<Hamburger className="h-5 w-5" />
+			</button>
 			<div
 				class={`${
 					burgerClicked ? '-translate-y-0' : '-translate-y-32'
@@ -58,8 +60,8 @@
 				<Search
 					classes={{
 						form: 'w-full flex-col justify-center',
-						input: 'h-10 w-full rounded border border-white bg-transparent px-3 text-white',
-						select: 'h-10 w-full rounded border border-white bg-transparent px-3 text-white'
+						input: 'h-10 w-full',
+						select: 'h-10 w-full'
 					}}
 				/>
 			</div>

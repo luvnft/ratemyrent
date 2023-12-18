@@ -1,27 +1,54 @@
 <script lang="ts">
-	import { FloatingLabelInput } from 'flowbite-svelte';
-
-	let dialog: HTMLDialogElement;
+	import { supabase } from '$lib/supabase';
+	import { session, user } from '$lib/store';
 
 	enum State {
-		Closed = 0,
-		Signup = 'Sign Up',
-		Login = 'Log In'
+		Closed = '',
+		Login = 'Log In or Sign Up',
+		Verify = 'Check Your Inbox',
+		SignOut = 'Signing Out'
 	}
 
 	let state = State.Closed;
 
+	let dialog: HTMLDialogElement;
+
 	$: if (dialog) {
-		if (state) dialog.showModal();
-		else dialog.close();
+		if (state) {
+			dialog.showModal();
+		} else dialog.close();
 	}
+
+	let email: string;
+
+	let alert = {
+		shown: false,
+		message: ''
+	};
+
+	const handleSubmit = async () => {
+		const { data } = await supabase.auth.signInWithOtp({ email: email });
+
+		if (data) state = State.Verify;
+	};
+
+	const handleSignOut = () => {
+		session.set(null);
+		user.set(null);
+		supabase.auth.signOut();
+		state = State.Closed;
+	};
 </script>
 
-<button class="whitespace-nowrap text-left" type="button" on:click={() => (state = State.Signup)}>
-	Sign Up
-</button>
-<button class="whitespace-nowrap text-left" type="button" on:click={() => (state = State.Login)}>
-	Log In
+<button
+	class="whitespace-nowrap text-left"
+	type="button"
+	on:click={() => {
+		if ($user) state = State.SignOut;
+		else state = State.Login;
+	}}
+>
+	{$user ? $user.email : 'Log In'}
 </button>
 <dialog class="w-full max-w-sm rounded-lg bg-white p-10" bind:this={dialog}>
 	<button
@@ -31,46 +58,33 @@
 	>
 		&cross;
 	</button>
-	<form class="flex w-full flex-col gap-3" on:submit|preventDefault>
+	<form class="flex w-full flex-col gap-3" on:submit|preventDefault={handleSubmit}>
 		<p class="text-xl">{state}</p>
-		<FloatingLabelInput style="outlined" name="email" type="email" autocomplete="email">
-			Email
-		</FloatingLabelInput>
-		<FloatingLabelInput
-			style="outlined"
-			name="password"
-			type="password"
-			autocomplete={state === State.Signup ? 'new-password' : 'current-password'}
-		>
-			Password
-		</FloatingLabelInput>
-		{#if state === State.Signup}
-			<FloatingLabelInput
-				style="outlined"
-				name="confirm-password"
-				type="password"
-				autocomplete="new-password"
-			>
-				Confirm Password
-			</FloatingLabelInput>
+		{#if alert.shown}
+			<p>{alert.message}</p>
 		{/if}
-		<button class="rounded-lg bg-blue-600 py-3 text-white" type="submit">{state}</button>
-		{#if state === State.Signup}
-			<p>
-				Already have an account? <button
-					type="button"
-					class="text-blue-600"
-					on:click={() => (state = State.Login)}>{State.Login}</button
-				>
-			</p>
-		{:else}
-			<p>
-				Don't have an account? <button
-					type="button"
-					class="text-blue-600"
-					on:click={() => (state = State.Signup)}>{State.Signup}</button
-				>
-			</p>
+		{#if state === State.Login}
+			<label for="email">Email Address</label>
+			<input
+				class="rounded-lg border-2 border-slate-300 p-3 text-black"
+				name="email"
+				type="email"
+				id="email"
+				autocomplete="email"
+				bind:value={email}
+			/>
+			<button class="rounded-lg bg-blue-600 py-3 text-white" type="submit">
+				Log In or Sign Up with Email
+			</button>
+		{/if}
+		{#if state === State.Verify}
+			<p>An email has been sent to {email}. Follow the instructions to finish logging in.</p>
+		{/if}
+		{#if state === State.SignOut}
+			<p>Are you sure you would like to sign out?</p>
+			<button type="button" class="rounded-lg bg-blue-600 py-3 text-white" on:click={handleSignOut}>
+				Confirm Sign Out
+			</button>
 		{/if}
 	</form>
 </dialog>

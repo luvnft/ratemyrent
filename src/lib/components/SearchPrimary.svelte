@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { searchFilter, searchQuery } from '$lib/store';
 	import type { Place } from '$lib/types';
+	import SearchIcon from '$lib/img/SearchIcon.svelte';
+	import { supabase } from '$lib/supabase';
 
 	let suggestions: Place[] = [];
 
@@ -10,6 +11,7 @@
 		form: string;
 		input: string;
 		select: string;
+		button: string;
 	};
 	export let autofocus = false;
 
@@ -23,31 +25,24 @@
 	};
 
 	const handleInput = async () => {
-		const res = await fetch(
-			encodeURI(`${$page.url.origin}/api/search?q=${$searchQuery}&filter=${$searchFilter}&limit=5`)
-		);
-		const data: Place[] = (await res.json()) || [];
-		suggestions = data;
-	};
-
-	const handleChange = () => {
-		if ($page.url.pathname === '/search') {
-			goto(`/search?q=${$searchQuery}&filter=${$searchFilter}`);
-		}
+		const { data } = await supabase
+			.from('places')
+			.select()
+			.ilike('country_code', $searchFilter)
+			.textSearch('searchable', $searchQuery ? $searchQuery.split(' ').join(':* & ') + ':*' : '')
+			.limit(5);
+		suggestions = data || [];
 	};
 </script>
 
 <form
-	class={`${classes.form} group flex flex-row items-center gap-1`}
+	class={`${classes.form} flex flex-row items-center shadow-lg`}
 	on:submit|preventDefault={handleSubmit}
 >
 	<select
-		class={`${classes.select} transition-colors focus:outline-none group-hover:bg-white group-hover:text-black [&:has(+_div_>_input:focus)]:bg-white [&:has(+_div_>_input:focus)]:text-black`}
+		class={`${classes.select} rounded-t-md border-0 px-5 focus:ring-0 sm:rounded-l-md sm:rounded-tr-none`}
 		bind:value={$searchFilter}
-		on:change={() => {
-			handleInput();
-			handleChange();
-		}}
+		on:change={() => handleInput()}
 		name="filter"
 	>
 		<optgroup label="Select a Region">
@@ -99,10 +94,10 @@
 			<option value="US">United States</option>
 		</optgroup>
 	</select>
-	<div class="w-full sm:w-auto group-hover:[&>input]:bg-white group-hover:[&>input]:text-black">
+	<div class="relative flex w-full sm:w-auto">
 		<!-- svelte-ignore a11y-autofocus -->
 		<input
-			class={`${classes.input} peer transition-colors focus:bg-white focus:text-black focus:outline-none`}
+			class={`${classes.input} peer rounded-bl-md border-0 px-5 focus:outline-none focus:ring-0 sm:rounded-none`}
 			type="search"
 			name="search"
 			enterkeyhint="search"
@@ -111,8 +106,13 @@
 			on:input={handleInput}
 			{autofocus}
 		/>
+		<button type="submit" class={`${classes.button} rounded-br-md sm:rounded-r-md`}>
+			<div class="flex items-center justify-center">
+				<SearchIcon className="h-2/5 w-2/5" />
+			</div>
+		</button>
 		<div
-			class="invisible absolute flex translate-y-1 flex-col overflow-hidden rounded bg-white shadow-lg peer-focus:visible [&:has(>_button:hover)]:visible"
+			class="invisible absolute top-full flex translate-y-1 flex-col overflow-hidden rounded bg-white shadow-lg peer-focus:visible [&:has(>_button:hover)]:visible"
 		>
 			{#each suggestions as suggestion}
 				<button

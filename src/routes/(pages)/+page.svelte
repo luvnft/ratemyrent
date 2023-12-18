@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Search from '$lib/components/Search.svelte';
-	import backgroundImage from '$lib/assets/background-image.jpg';
+	import Search from '$lib/components/SearchPrimary.svelte';
+	import backgroundImage from '$lib/img/background-image.jpg';
 	import SignLog from '$lib/components/SignLog.svelte';
 </script>
 
@@ -10,9 +10,15 @@
 	<meta name="theme-color" content="#000000" />
 </svelte:head>
 
-<div class="fixed right-8 top-5 z-50 flex flex-row items-center gap-5 text-white"><SignLog /></div>
+<header class="fixed top-0 z-50 h-16 w-full text-white">
+	<nav class="mx-auto flex h-full max-w-6xl items-center justify-end px-8">
+		<SignLog />
+	</nav>
+</header>
 
-<main style={`background-image: url("${backgroundImage}"); background-size: cover; background-position: center;`}>
+<main
+	style={`background-image: url("${backgroundImage}"); background-size: cover; background-position: center;`}
+>
 	<div
 		class="flex h-screen flex-col items-center justify-center space-y-5 overflow-hidden px-8 text-white backdrop-brightness-50"
 	>
@@ -21,8 +27,9 @@
 		<Search
 			classes={{
 				form: 'max-w-sm flex-wrap sm:max-w-max',
-				select: 'h-14 w-full rounded bg-white px-5 text-black shadow-md sm:w-44',
-				input: 'h-14 w-full rounded bg-white px-5 text-black shadow-md sm:w-96'
+				select: 'h-14 w-full bg-gray-200 text-black sm:w-44 sm:bg-blue-600 sm:text-white',
+				input: 'h-14 w-full bg-white text-black sm:w-80',
+				button: 'h-14 w-14 bg-blue-600 text-white'
 			}}
 			autofocus
 		/>
