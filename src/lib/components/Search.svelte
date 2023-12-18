@@ -4,6 +4,7 @@
 	import type { Place } from '$lib/types';
 	import SearchIcon from '$lib/img/SearchIcon.svelte';
 	import { supabase } from '$lib/supabase';
+	import { page } from '$app/stores';
 
 	let suggestions: Place[] = [];
 
@@ -11,8 +12,9 @@
 		form: string;
 		input: string;
 		select: string;
-		button: string;
+		button?: string;
 	};
+	export let type = 'primary';
 	export let autofocus = false;
 
 	const handleSubmit = () => {
@@ -33,16 +35,22 @@
 			.limit(5);
 		suggestions = data || [];
 	};
+
+	const handleChange = () => {
+		if ($page.url.pathname === '/search') {
+			goto(`/search?q=${$searchQuery}&filter=${$searchFilter}`);
+		}
+	};
 </script>
 
-<form
-	class={`${classes.form} flex flex-row items-center shadow-lg`}
-	on:submit|preventDefault={handleSubmit}
->
+<form class={`${classes.form} flex flex-row items-center`} on:submit|preventDefault={handleSubmit}>
 	<select
-		class={`${classes.select} rounded-t-md border-0 px-5 focus:ring-0 sm:rounded-l-md sm:rounded-tr-none`}
+		class={`${classes.select}`}
 		bind:value={$searchFilter}
-		on:change={() => handleInput()}
+		on:change={() => {
+			handleInput();
+			handleChange();
+		}}
 		name="filter"
 	>
 		<optgroup label="Select a Region">
@@ -97,7 +105,7 @@
 	<div class="relative flex w-full sm:w-auto">
 		<!-- svelte-ignore a11y-autofocus -->
 		<input
-			class={`${classes.input} peer rounded-bl-md border-0 px-5 focus:outline-none focus:ring-0 sm:rounded-none`}
+			class={`${classes.input} peer focus:outline-none`}
 			type="search"
 			name="search"
 			enterkeyhint="search"
@@ -106,11 +114,13 @@
 			on:input={handleInput}
 			{autofocus}
 		/>
-		<button type="submit" class={`${classes.button} rounded-br-md sm:rounded-r-md`}>
-			<div class="flex items-center justify-center">
-				<SearchIcon className="h-2/5 w-2/5" />
-			</div>
-		</button>
+		{#if type === 'primary'}
+			<button type="submit" class={`${classes.button} rounded-br-md sm:rounded-r-md`}>
+				<div class="flex items-center justify-center">
+					<SearchIcon className="h-2/5 w-2/5" />
+				</div>
+			</button>
+		{/if}
 		<div
 			class="invisible absolute top-full flex translate-y-1 flex-col overflow-hidden rounded bg-white shadow-lg peer-focus:visible [&:has(>_button:hover)]:visible"
 		>

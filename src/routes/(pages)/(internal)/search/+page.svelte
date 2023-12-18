@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-
-	const handleClick = (id: string) => {
-		goto(`/${id}`);
-	};
 </script>
 
 <svelte:head>
@@ -20,7 +16,7 @@
 			<button
 				type="button"
 				class="cursor-pointer bg-slate-100 p-5 text-left"
-				on:click={() => handleClick(place.id)}
+				on:click={() => goto(`/${place.id}`)}
 			>
 				<h2 class="text-2xl font-black">{place.name}</h2>
 				<h3>{place.full_address}</h3>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabase';
-	import { session, user } from '$lib/store';
+	import type { User } from '@supabase/supabase-js';
+	import { onMount } from 'svelte';
 
 	enum State {
 		Closed = '',
@@ -33,22 +34,25 @@
 	};
 
 	const handleSignOut = () => {
-		session.set(null);
-		user.set(null);
 		supabase.auth.signOut();
 		state = State.Closed;
 	};
+
+	let user: User | null;
+	onMount(async () => {
+		user = (await supabase.auth.getUser()).data.user;
+	});
 </script>
 
 <button
 	class="whitespace-nowrap text-left"
 	type="button"
 	on:click={() => {
-		if ($user) state = State.SignOut;
+		if (user) state = State.SignOut;
 		else state = State.Login;
 	}}
 >
-	{$user ? $user.email : 'Log In'}
+	{user ? user.email : 'Log In'}
 </button>
 <dialog class="w-full max-w-sm rounded-lg bg-white p-10" bind:this={dialog}>
 	<button

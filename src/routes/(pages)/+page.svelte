@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Search from '$lib/components/SearchPrimary.svelte';
+	import Search from '$lib/components/Search.svelte';
 	import backgroundImage from '$lib/img/background-image.jpg';
 	import SignLog from '$lib/components/SignLog.svelte';
 </script>
@@ -26,9 +26,10 @@
 		<h2 class="text-center text-xl drop-shadow-md">Enter an address to get started!</h2>
 		<Search
 			classes={{
-				form: 'max-w-sm flex-wrap sm:max-w-max',
-				select: 'h-14 w-full bg-gray-200 text-black sm:w-44 sm:bg-blue-600 sm:text-white',
-				input: 'h-14 w-full bg-white text-black sm:w-80',
+				form: 'max-w-sm flex-wrap shadow-lg sm:max-w-max',
+				select:
+					'h-14 w-full rounded-t-md bg-gray-200 px-5 text-black sm:w-44 sm:rounded-l-md sm:rounded-tr-none sm:bg-blue-600 sm:text-white',
+				input: 'h-14 w-full rounded-bl-md bg-white px-5 text-black sm:w-80 sm:rounded-none',
 				button: 'h-14 w-14 bg-blue-600 text-white'
 			}}
 			autofocus

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import SignLog from '$lib/components/SignLog.svelte';
-	import Search from '$lib/components/SearchNav.svelte';
+	import Search from '$lib/components/Search.svelte';
 	import Hamburger from '$lib/img/Hamburger.svelte';
 	import SearchIcon from '$lib/img/SearchIcon.svelte';
 	import { page } from '$app/stores';
@@ -24,10 +24,13 @@
 			<a class="whitespace-nowrap font-semibold" href="/">Rate My Rentals</a>
 			<Search
 				classes={{
-					form: 'hidden sm:flex',
-					input: 'h-10 w-52',
-					select: 'h-10 w-40'
+					form: 'group hidden gap-1 sm:flex',
+					input:
+						'h-10 w-52 rounded border border-white bg-transparent px-3 text-white transition-colors focus:border-white focus:bg-white focus:text-black group-hover:bg-white group-hover:text-black',
+					select:
+						'h-10 w-40 rounded border border-white bg-transparent px-3 text-white transition-colors focus:border-white focus:outline-none group-hover:bg-white group-hover:text-black [&:has(+_div_>_input:focus)]:bg-white [&:has(+_div_>_input:focus)]:text-black'
 				}}
+				type="nav"
 			/>
 		</div>
 		<div class="flex flex-row">
