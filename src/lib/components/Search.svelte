@@ -26,14 +26,14 @@
 		suggestions = [];
 	};
 
-	const handleInput = async () => {
-		const { data } = await supabase
+	const handleInput = () => {
+		supabase
 			.from('places')
 			.select()
 			.ilike('country_code', $searchFilter)
 			.textSearch('searchable', $searchQuery ? $searchQuery.split(' ').join(':* & ') + ':*' : '')
-			.limit(5);
-		suggestions = data || [];
+			.limit(5)
+			.then(({ data }) => (suggestions = data || []));
 	};
 
 	const handleChange = () => {

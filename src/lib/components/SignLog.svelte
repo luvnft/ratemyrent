@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabase';
 	import type { User } from '@supabase/supabase-js';
-	import { onMount } from 'svelte';
+	import { dev } from '$app/environment';
 
 	enum State {
 		Closed = '',
@@ -27,21 +27,23 @@
 		message: ''
 	};
 
-	const handleSubmit = async () => {
-		const { data } = await supabase.auth.signInWithOtp({ email: email });
-
-		if (data) state = State.Verify;
+	const handleSubmit = () => {
+		supabase.auth
+			.signInWithOtp({
+				email: email,
+				options: { emailRedirectTo: dev ? 'http://localhost:5173' : undefined }
+			})
+			.then(() => (state = State.Verify));
 	};
 
 	const handleSignOut = () => {
 		supabase.auth.signOut();
 		state = State.Closed;
+		user = undefined;
 	};
 
-	let user: User | null;
-	onMount(async () => {
-		user = (await supabase.auth.getUser()).data.user;
-	});
+	let user: User | undefined;
+	supabase.auth.getSession().then(({ data }) => (user = data.session?.user));
 </script>
 
 <button
