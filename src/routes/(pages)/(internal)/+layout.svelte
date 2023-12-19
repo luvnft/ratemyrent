@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<meta name="theme-color" content="#1a56db" />
+	<meta name="theme-color" content="#1d4ed8" />
 </svelte:head>
 
 <Header />

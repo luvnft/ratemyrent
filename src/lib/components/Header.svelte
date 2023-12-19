@@ -19,16 +19,16 @@
 </script>
 
 <header class="fixed top-0 z-50 h-16 w-full bg-blue-700 text-white">
-	<nav class="mx-auto flex h-full max-w-6xl items-center justify-between bg-blue-700 px-8">
+	<nav class="mx-auto flex h-full max-w-6xl items-center justify-between bg-inherit px-8">
 		<div class="flex flex-row items-center gap-5">
 			<a class="whitespace-nowrap font-semibold" href="/">Rate My Rentals</a>
 			<Search
 				classes={{
 					form: 'group hidden gap-1 sm:flex',
 					input:
-						'h-10 w-52 rounded border border-white bg-transparent px-3 text-white transition-colors focus:border-white focus:bg-white focus:text-black group-hover:bg-white group-hover:text-black',
+						'h-10 w-52 rounded border border-white bg-transparent px-3 text-white transition-colors focus:outline-none group-focus-within:bg-white group-focus-within:text-black group-hover:bg-white group-hover:text-black',
 					select:
-						'h-10 w-40 rounded border border-white bg-transparent px-3 text-white transition-colors focus:border-white focus:outline-none group-hover:bg-white group-hover:text-black [&:has(+_div_>_input:focus)]:bg-white [&:has(+_div_>_input:focus)]:text-black'
+						'h-10 w-40 rounded border border-white bg-transparent px-3 text-white transition-colors focus:outline-none group-focus-within:bg-white group-focus-within:text-black group-hover:bg-white group-hover:text-black group-focus-within:[&+svg]:text-black group-hover:[&+svg]:text-black'
 				}}
 				type="nav"
 			/>
@@ -62,10 +62,13 @@
 			>
 				<Search
 					classes={{
-						form: 'w-full flex-col justify-center',
-						input: 'h-10 w-full',
-						select: 'h-10 w-full'
+						form: 'group w-full flex-col gap-1',
+						input:
+							'h-10 w-full rounded border border-white bg-transparent px-3 text-white transition-colors focus:outline-none group-focus-within:bg-white group-focus-within:text-black group-hover:bg-white group-hover:text-black',
+						select:
+							'h-10 w-full rounded border border-white bg-transparent px-3 text-white transition-colors focus:outline-none group-focus-within:bg-white group-focus-within:text-black group-hover:bg-white group-hover:text-black group-focus-within:[&+svg]:text-black group-hover:[&+svg]:text-black'
 					}}
+					type="nav"
 				/>
 			</div>
 		</div>

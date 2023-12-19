@@ -1,5 +1,5 @@
 <script>
-	import '$lib/tailwind.css';
+	import '../../app.css';
 	import { supabase } from '$lib/supabase';
 
 	supabase.auth.refreshSession();
