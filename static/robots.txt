@@ -7,10 +7,10 @@ Disallow: /
 User-agent: archive.org_bot
 Disallow: /
 
-User-agent: googlebot
-Allow: /
+# User-agent: googlebot
+# Allow: /
 
-User-agent: bingbot
-Allow: /
+# User-agent: bingbot
+# Allow: /
 
-Sitemap: /sitemap.xml
+Sitemap: https://www.ratemyrentals.org/sitemap.xml
